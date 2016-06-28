@@ -36,11 +36,13 @@ var requestHandler = function(request, response) {
     section at http://nodejs.org/documentation/api/
   */
 
+  // If the URL is invalid, return 404 error.
   if (request.url !== '/classes/messages') {
     statusCode = 404;
     response.writeHead(statusCode, headers); 
     response.end('Page not found!');
 
+  // If post is successful, stringify and push to messages.results array.
   } else if (request.method === 'POST') {
     statusCode = 201; 
     response.writeHead(statusCode, headers); 
@@ -51,6 +53,7 @@ var requestHandler = function(request, response) {
 
     response.end(); 
 
+  // If request type is GET, returned all stored messages.
   } else if (request.method === 'GET') {
     statusCode = 200; 
     response.writeHead(statusCode, headers); 
