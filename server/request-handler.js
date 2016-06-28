@@ -1,17 +1,19 @@
-var messages = {results: []}; 
+var messages = []; 
 var statusCode;
 
-/*
+/**********************************************************************************
+
   These headers will allow Cross-Origin Resource Sharing (CORS). This code 
   allows this server to talk to websites that are on different domains, for 
   instance, your chat client.
 
-  Your chat client is running from a url like file://your/chat/client/index.html,
+  Your chat client is running from a url like file://your/chat/client/index.html,  
   which is considered a different domain.
 
   Another way to get around this restriction is to serve you chat
   client from this domain by setting up static file serving. 
-*/
+
+**********************************************************************************/
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -23,22 +25,24 @@ var defaultCorsHeaders = {
 var headers = defaultCorsHeaders;
 headers['Content-Type'] = 'application/json';
 
-var requestHandler = function(request, response) {
+var requestHandler = (request, response) => {
 
-  /* 
-    Request and Response come from the node's http module.
+  /*********************************************************************** 
+
+    Request and Response comes from the node's http module.
 
     They include information about both the incoming request, such as
-    headers and URL, and about the outgoing response, such as its status
+    headers and URL, and about the outgoing response, such as its status  
     and content.
 
     Documentation for both request and response can be found in the HTTP 
     section at http://nodejs.org/documentation/api/
-  */
+
+  ***********************************************************************/
 
   // If the URL is invalid, return 404 error.
   if (request.url !== '/classes/messages') {
-    statusCode = 404;
+    statusCode = 404; 
     response.writeHead(statusCode, headers); 
     response.end('Page not found!');
 
@@ -48,7 +52,7 @@ var requestHandler = function(request, response) {
     response.writeHead(statusCode, headers); 
 
     request.on('data', function(chunk) {
-      messages.results.push(JSON.parse(chunk.toString())); 
+      messages.push(JSON.parse(chunk.toString()));
     });
 
     response.end(); 
@@ -59,7 +63,7 @@ var requestHandler = function(request, response) {
     response.writeHead(statusCode, headers); 
 
     response.end(JSON.stringify({
-      results: messages.results
+      results: messages
     }));
   }
 
