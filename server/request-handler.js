@@ -23,7 +23,7 @@ var defaultCorsHeaders = {
 };
 
 var headers = defaultCorsHeaders;
-headers['Content-Type'] = 'application/json';
+// headers['Content-Type'] = 'application/json';
 
 var requestHandler = (request, response) => {
 
